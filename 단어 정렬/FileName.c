@@ -11,39 +11,40 @@ typedef struct node{
 
 node* tail;   // tail -> next;
 
-int push(char tmp[99]) {
+void push(char tmp[99]) {
 	    node* newnode = (node*)malloc(sizeof(node));
 		strcpy(newnode->word, tmp);
 		newnode->n = 1;
 	if (tail == NULL) {
 		newnode->next = NULL;
 		tail = newnode;
+		return 1;
 	}
 	else{
 		node* cur = tail;
 		node* pre = NULL;
 		while (1) {
-			if (strcmp(cur->word, tmp) > 0) {
+			if (cur == NULL) {
+				newnode->next = NULL;
+				pre->next = newnode;
+				break;
+		    }
+			else if (strcmp(cur->word, tmp) > 0) {
 				 if (pre == NULL) {
 					 newnode->next = cur;
 					 tail = newnode;
-					 return 1;
+					 break;
 				}
 				else {
 					 newnode->next = cur;
 					 pre->next = newnode;
-					 return 1;
+					 break;
 				}
 			}
 			else if (strcmp(cur->word, tmp) == 0) {
 				cur->n++;
-				return 1;
+				break;
 			}
-			else if (cur == NULL) {
-				newnode->next = NULL;
-				pre->next = newnode;
-				return 1;
-		    }
 			pre = cur;
 			cur = cur->next;
 		}	
